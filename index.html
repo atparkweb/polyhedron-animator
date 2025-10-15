@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js Wireframe Cube</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            display: block;
+        }
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            color: white;
+            min-width: 250px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .control-group input[type="range"] {
+            width: 100%;
+        }
+        .control-group input[type="color"] {
+            width: 100%;
+            height: 40px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .control-group .value-display {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 12px;
+            color: #aaa;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <h3 style="margin-top: 0;">Cube Controls</h3>
+
+        <div class="control-group">
+            <label>Spin Rate: <span class="value-display" id="spinRateValue">0.01</span></label>
+            <input type="range" id="spinRate" min="0" max="0.1" step="0.001" value="0.01">
+        </div>
+
+        <div class="control-group">
+            <label>Spin Axis:</label>
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="spinX" checked>
+                    X
+                </label>
+                <label>
+                    <input type="checkbox" id="spinY" checked>
+                    Y
+                </label>
+                <label>
+                    <input type="checkbox" id="spinZ">
+                    Z
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Cube Color:</label>
+            <input type="color" id="cubeColor" value="#00ff00">
+        </div>
+
+        <div class="control-group">
+            <label>Background Color:</label>
+            <input type="color" id="backgroundColor" value="#000000">
+        </div>
+
+        <div class="control-group">
+            <label>Edge Gap: <span class="value-display" id="edgeGapValue">0.00</span></label>
+            <input type="range" id="edgeGap" min="0" max="0.3" step="0.01" value="0">
+        </div>
+
+        <div class="control-group">
+            <label>Number of Cubes: <span class="value-display" id="cubeCountValue">1</span></label>
+            <input type="range" id="cubeCount" min="1" max="64" step="1" value="1">
+        </div>
+
+        <div class="control-group">
+            <label>Cube Size: <span class="value-display" id="cubeSizeValue">1.00</span></label>
+            <input type="range" id="cubeSize" min="0.3" max="3" step="0.1" value="1">
+        </div>
+
+        <div class="control-group">
+            <label>Cube Spacing: <span class="value-display" id="cubeSpacingValue">1.50</span></label>
+            <input type="range" id="cubeSpacing" min="0.5" max="5" step="0.1" value="1.5">
+        </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+</body>
+</html>
