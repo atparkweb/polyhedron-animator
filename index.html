@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three.js Wireframe Cube</title>
+    <title>Three.js Wireframe Polyhedron</title>
     <style>
         body {
             margin: 0;
@@ -41,6 +41,20 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        .control-group select {
+            width: 100%;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .control-group select option {
+            background: #222;
+            color: white;
+        }
         .control-group .value-display {
             display: inline-block;
             margin-left: 10px;
@@ -61,12 +75,72 @@
         .checkbox-group input[type="checkbox"] {
             cursor: pointer;
         }
+        .capture-button {
+            width: 100%;
+            padding: 12px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .capture-button:hover {
+            background: #0052a3;
+        }
+        .capture-button:active {
+            background: #004080;
+        }
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .controls-header h3 {
+            margin: 0;
+        }
+        .toggle-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            padding: 0;
+        }
+        .toggle-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .controls-content {
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            overflow: hidden;
+        }
+        .controls.collapsed .controls-content {
+            max-height: 0;
+            opacity: 0;
+        }
+        .controls.collapsed {
+            min-width: auto;
+        }
     </style>
 </head>
 <body>
     <div class="controls">
-        <h3 style="margin-top: 0;">Cube Controls</h3>
+        <div class="controls-header">
+            <h3>Polyhedron Controls</h3>
+            <button class="toggle-button" id="toggleButton">−</button>
+        </div>
 
+        <div class="controls-content">
         <div class="control-group">
             <label>Spin Rate: <span class="value-display" id="spinRateValue">0.01</span></label>
             <input type="range" id="spinRate" min="0" max="0.1" step="0.001" value="0.01">
@@ -91,8 +165,34 @@
         </div>
 
         <div class="control-group">
-            <label>Cube Color:</label>
+            <label>Shape Type:</label>
+            <select id="shapeType">
+                <option value="4">Tetrahedron (4 faces)</option>
+                <option value="6" selected>Cube (6 faces)</option>
+                <option value="8">Octahedron (8 faces)</option>
+                <option value="12">Dodecahedron (12 faces)</option>
+                <option value="20">Icosahedron (20 faces)</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Polyhedron Color:</label>
             <input type="color" id="cubeColor" value="#00ff00">
+        </div>
+
+        <div class="control-group">
+            <label>Color Cycling:</label>
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="colorCycleToggle">
+                    Enable
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Color Cycle Rate: <span class="value-display" id="colorCycleRateValue">0.50</span></label>
+            <input type="range" id="colorCycleRate" min="0.1" max="5" step="0.1" value="0.5">
         </div>
 
         <div class="control-group">
@@ -106,18 +206,23 @@
         </div>
 
         <div class="control-group">
-            <label>Number of Cubes: <span class="value-display" id="cubeCountValue">1</span></label>
+            <label>Number of Polyhedrons: <span class="value-display" id="cubeCountValue">1</span></label>
             <input type="range" id="cubeCount" min="1" max="64" step="1" value="1">
         </div>
 
         <div class="control-group">
-            <label>Cube Size: <span class="value-display" id="cubeSizeValue">1.00</span></label>
+            <label>Polyhedron Size: <span class="value-display" id="cubeSizeValue">1.00</span></label>
             <input type="range" id="cubeSize" min="0.3" max="3" step="0.1" value="1">
         </div>
 
         <div class="control-group">
-            <label>Cube Spacing: <span class="value-display" id="cubeSpacingValue">1.50</span></label>
+            <label>Polyhedron Spacing: <span class="value-display" id="cubeSpacingValue">1.50</span></label>
             <input type="range" id="cubeSpacing" min="0.5" max="5" step="0.1" value="1.5">
+        </div>
+
+        <div class="control-group">
+            <button class="capture-button" id="captureButton">Capture Frame</button>
+        </div>
         </div>
     </div>
 
